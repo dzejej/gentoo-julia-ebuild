@@ -73,6 +73,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}"-make-install-no-build.patch
 	# Don't hardcode library names
 	"${FILESDIR}/${PN}"-hardcoded-libs-1.7.0.patch
+	#libunwind 1.6 compatibility
+	#"${FILESDIR}/${PN}"-libunwind-1.6.patch
 	# just remove patchelf from linux ?? just my own solution to sigsegv error ??
 	"${FILESDIR}/${PN}"-turnoff-patchelf.patch
 )
