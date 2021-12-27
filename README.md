@@ -11,3 +11,6 @@ julia-1.7.0
 
 julia-1.7.1
   - just some cosmetic changes
+
+julia-1.6.5 LTS 
+  - patches and ebuild file for building up julia-1.6.5 LTS version
