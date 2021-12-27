@@ -8,6 +8,8 @@ inherit llvm pax-utils toolchain-funcs
 # correct versions for stdlibs are in deps/checksums
 # for everything else, run with network-sandbox and wait for the crash
 
+#MY_LIBUV_V="fb3e3364c33ae48c827f6b103e05c3f0e78b79a9"
+#MY_LIBWHICH_V="81e9723c0273d78493dc8c8ed570f68d9ce7e89e"
 MY_LLVM_V="13.0.1"
 
 DESCRIPTION="High-performance programming language for technical computing"
@@ -60,11 +62,20 @@ DEPEND="${RDEPEND}
 
 
 # acording to the Arch Linux
-# https://github.com/archlinux/svntogit-community/tree/7d240cefc127c1a8060316e9296445ef02a06a7b/trunk
+# https://github.com/archlinux/svntogit-community/tree/43c47851bcdebaaa77a2d64a479eec652273e0a6/trunk
 PATCHES=(
+	"${FILESDIR}/${PN}"-1.1.0-fix_llvm_install.patch
 	"${FILESDIR}/${PN}"-1.4.0-no_symlink_llvm.patch
+	# fix bad performance with LLVM 12
+	"${FILESDIR}/${PN}"-LLVM-bad_perf.patch 
+	# fix build with LLVM 13
 	"${FILESDIR}/${PN}"-llvm13-fix_A.patch
+	"${FILESDIR}/${PN}"-llvm13-fix_C.patch
 	"${FILESDIR}/${PN}"-llvm13-fix_B.patch
+	# https://github.com/JuliaLang/julia/commit/0f7d183c.patch
+	#"${FILESDIR}/"0f7d183c.patch
+	# Fix LazyArtifacts tests
+	"${FILESDIR}/${PN}"-lazy-fix.patch
 	# Adapt to LLVM 13 type changes
 	"${FILESDIR}/${PN}"-llvm13.patch
 	# libgit2 1.2 compatibility
@@ -72,11 +83,9 @@ PATCHES=(
 	# Don't build again in install
 	"${FILESDIR}/${PN}"-make-install-no-build.patch
 	# Don't hardcode library names
-	"${FILESDIR}/${PN}"-hardcoded-libs-1.7.0.patch
-	#libunwind 1.6 compatibility
-	#"${FILESDIR}/${PN}"-libunwind-1.6.patch
+	"${FILESDIR}/${PN}"-hardcoded-libs-1.6.0.patch
 	# just remove patchelf from linux ?? just my own solution to sigsegv error ??
-	"${FILESDIR}/${PN}"-turnoff-patchelf.patch
+	"${FILESDIR}/${PN}"-turnoff-patchelf-1.6.0.patch
 )
 
 pkg_setup() {
